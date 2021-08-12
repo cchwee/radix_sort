@@ -33,6 +33,10 @@ def counting_sort(a_list):
 
 # Radix sort
 def num_rad_sort(nums, b):
+    # get the max digit number
+    
+    # formula = (number // 10**index) % base 
+
     # returns a sorted list nums in asc order
     return nums
 
