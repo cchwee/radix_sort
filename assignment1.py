@@ -70,7 +70,7 @@ def base_timer(num_list, base_list):
 
 
 '''
-# Driver code
+# Driver code for Task 1
 nums = [43, 101, 22, 27, 5, 50, 15]
 nums1 = [1,2,3,1,3,2,4]
 print("nums: " + str(nums))
@@ -79,10 +79,10 @@ print("nums1: " + str(nums1))
 print(num_rad_sort(nums1, 4))
 '''
 
+'''
 # Driver code for Task 2
 # creates 4 lists of data to test base_timer
 import random
-import matplotlib_inline 
 
 random.seed("FIT2004S22021")
 data1 = [random.randint(0,2**25) for _ in range(2**15)]
@@ -99,5 +99,11 @@ print(y1)
 print(y2)
 print(y3)
 print(y4)
+'''
 
+import pandas
+
+# Task 3
+def interest_groups(data):
+    pass
 
