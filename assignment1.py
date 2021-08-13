@@ -41,6 +41,8 @@ def num_rad_sort(nums, b):
     # returns a sorted list nums in asc order
     return nums
 
+
+'''
 # Driver code
 nums = [43, 101, 22, 27, 5, 50, 15]
 nums1 = [1,2,3,1,3,2,4]
@@ -48,3 +50,4 @@ print("nums: " + str(nums))
 print(num_rad_sort(nums, 4))
 print("nums1: " + str(nums1))
 print(num_rad_sort(nums1, 4))
+'''
