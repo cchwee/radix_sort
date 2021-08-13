@@ -1,3 +1,4 @@
+# Task 1
 # Counting sort
 def counting_sort(a_list, base, exp):
 
@@ -42,6 +43,32 @@ def num_rad_sort(nums, b):
     return nums
 
 
+import time
+
+# Task 2
+# Timing bases
+def base_timer(num_list, base_list):
+
+    # an empty list to store the time taken
+    output_lst = []
+
+    # iterate through bases in base_list
+    for b in base_list:
+
+        # time the time taken for rad_sort
+        start_time = time.time()
+        num_rad_sort(num_list, b)
+        end_time = time.time()
+        duration = end_time - start_time
+
+        # append time to output list
+        output_lst.append(duration)
+    
+    # returns a list of numbers (time)
+    return output_lst
+
+
+
 '''
 # Driver code
 nums = [43, 101, 22, 27, 5, 50, 15]
@@ -51,3 +78,26 @@ print(num_rad_sort(nums, 4))
 print("nums1: " + str(nums1))
 print(num_rad_sort(nums1, 4))
 '''
+
+# Driver code for Task 2
+# creates 4 lists of data to test base_timer
+import random
+import matplotlib_inline 
+
+random.seed("FIT2004S22021")
+data1 = [random.randint(0,2**25) for _ in range(2**15)]
+data2 = [random.randint(0,2**25) for _ in range(2**16)]
+bases1 = [2**i for i in range(1,23)]
+bases2 = [2*10**6 + (5*10**5)*i for i in range(1,10)]
+y1 = base_timer(data1, bases1)
+y2 = base_timer(data2, bases1)
+y3 = base_timer(data1, bases2)
+y4 = base_timer(data2, bases2)
+print(bases1)
+print(bases2)
+print(y1)
+print(y2)
+print(y3)
+print(y4)
+
+
