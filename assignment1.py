@@ -97,11 +97,10 @@ print(y4)
 def countsort_strings(lst, col, base, min_base):
 
     # initialise the count_array
-    count_array = [[] for i in range(base)]
+    count_array = [[] for i in range(base-1)]
 
     # sort according to char[col]
     for interest in lst:
-        print(interest, col)
         if len(interest)-1 < col or interest[col] == " ":
             count_array[0].append(interest)
         else:
@@ -138,7 +137,7 @@ def radsort_strings(lst, base, min_base):
 def interest_groups(data):
 
     # intialise base values
-    base = 25  
+    base = 26
     min_base = ord('a')
 
     # do radix sort on interest list in each tuple
@@ -149,7 +148,6 @@ def interest_groups(data):
         sorted_lst = radsort_strings(interest_lst, base, min_base)
         temp_lst.append(sorted_lst)
 
-    print(temp_lst)
     # compare
     res = []
 
@@ -158,9 +156,5 @@ def interest_groups(data):
 
 # Driver code for Task 3
 data = [("nuka", ["birds", "napping"]),("hadley", ["napping birds", "nash equilibria"]),("yaffe", ["rainy evenings", "the colour red", "birds"]),("laurie", ["napping", "birds"]),("kamalani", ["birds", "rainy evenings", "the colour red"])]
-print("helo")
 print(interest_groups(data))
-
-lst = ["rainy evenings", "the colour red", "birds"]
-print(sorted(lst))
 
