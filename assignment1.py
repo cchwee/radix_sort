@@ -27,26 +27,28 @@ def counting_sort(a_list, base, exp):
 def num_rad_sort(nums, b):
     
     # get the max num in nums
-    max_num = nums[0]
-    for item in nums:
-        if item > max_num:
-            max_num = item
-    # print("max num is: " + str(max_num))
+    if len(nums) > 0:
+        max_num = nums[0]
+        for item in nums:
+            if item > max_num:
+                max_num = item
+        # print("max num is: " + str(max_num))
 
-    exp = 0
-    while (max_num // b**exp) > 0:
-        nums = counting_sort(nums, b, exp)
-        exp += 1
-        # print(nums)
+        exp = 0
+        while (max_num // b**exp) > 0:
+            nums = counting_sort(nums, b, exp)
+            exp += 1
+            # print(nums)
 
     # returns a sorted list nums in asc order
     return nums
 
 
-import time
 
 # Task 2
 # Timing bases
+import time
+
 def base_timer(num_list, base_list):
 
     # an empty list to store the time taken
@@ -67,17 +69,6 @@ def base_timer(num_list, base_list):
     # returns a list of numbers (time)
     return output_lst
 
-
-
-'''
-# Driver code for Task 1
-nums = [43, 101, 22, 27, 5, 50, 15]
-nums1 = [1,2,3,1,3,2,4]
-print("nums: " + str(nums))
-print(num_rad_sort(nums, 4))
-print("nums1: " + str(nums1))
-print(num_rad_sort(nums1, 4))
-'''
 
 '''
 # Driver code for Task 2
@@ -101,9 +92,75 @@ print(y3)
 print(y4)
 '''
 
-import pandas
 
 # Task 3
+def countsort_strings(lst, col, base, min_base):
+
+    # initialise the count_array
+    count_array = [[] for i in range(base)]
+
+    # sort according to char[col]
+    for interest in lst:
+        print(interest, col)
+        if len(interest)-1 < col or interest[col] == " ":
+            count_array[0].append(interest)
+        else:
+            val = ord(interest[col]) - min_base
+            count_array[val].append(interest)
+
+    # return output sorted list based on col
+    output_lst = []
+    for sorted_lst in count_array:
+        for interest in sorted_lst:
+            output_lst.append(interest)
+
+    return output_lst
+
+
+# radix sort from msb char --> lsb char
+def radsort_strings(lst, base, min_base):
+
+    # get the max length in lst of strings
+    if len(lst) > 1:
+        max_len = len(lst[0])
+        for i in range(len(lst)):
+            len_str = len(lst[i])
+            if len_str > max_len:
+                max_len = len_str
+
+        # perform sort from LSB col --> MSB col
+        for col in range((max_len-1), -1, -1):
+            result_lst = countsort_strings(lst, col, base, min_base)
+
+    return result_lst        
+
+
 def interest_groups(data):
-    pass
+
+    # intialise base values
+    base = 25  
+    min_base = ord('a')
+
+    # do radix sort on interest list in each tuple
+    temp_lst = []
+    
+    for tuple_pair in data:
+        interest_lst = tuple_pair[1]
+        sorted_lst = radsort_strings(interest_lst, base, min_base)
+        temp_lst.append(sorted_lst)
+
+    print(temp_lst)
+    # compare
+    res = []
+
+    return res
+
+
+# Driver code for Task 3
+data = [("nuka", ["birds", "napping"]),("hadley", ["napping birds", "nash equilibria"]),("yaffe", ["rainy evenings", "the colour red", "birds"]),("laurie", ["napping", "birds"]),("kamalani", ["birds", "rainy evenings", "the colour red"])]
+print("helo")
+print(interest_groups(data))
+
+lst = ["rainy evenings", "the colour red", "birds"]
+print(sorted(lst))
 
