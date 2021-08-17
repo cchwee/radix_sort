@@ -134,18 +134,60 @@ def radsort_strings(lst: list, base: int, min_base: int) -> list:
 
     return result_lst        
 
+# optimized count sort to sort based on length
+def optimized_countsort(lst, base, exp):
+
+    # initialise the count_array
+    count_array = [[] for i in range(base+1)]
+
+    # formula = (number // base**exp) % base 
+    # put in the item as linked list into count_array
+    for item in lst:
+        digit = (len(item[1]) // base ** exp) % base 
+        count_array[digit].append(item)
+    # print("now: " + str(count_array))
+
+    # iterate through count_array and return output
+    output_lst = []
+    for lst in count_array:
+        for item in lst:
+            output_lst.append(item)
+
+    # returns a sorted list
+    return output_lst
+
+
+# optimized num rad sort to sort based on length
+def optimized_num_radsort(lst):
+
+    # get max length
+    max_len = len(lst[0][1])
+    for item in lst:
+        interest_lst = item[1]
+        if len(interest_lst) > max_len:
+            max_len = len(interest_lst)
+
+    exp = 0
+    while (max_len // 10**exp) > 0:
+        lst = optimized_countsort(lst, 10, exp)
+        exp += 1
+        # print(nums)
+
+    # return output of sorted lst
+    return lst
+
 
 # compare two equal length lists, returns a Boolean
 def compare_lists(lst_a: list, lst_b: list) -> bool:
 
     # compare items in list a and list b
-    for item_a in lst_a:
-        for item_b in lst_b:
-            if item_a != item_b:
-                return False
+    for i in range(len(lst_a)):
+        if lst_a[i] != lst_b[i]:
+            return False
     return True
 
 
+# interest group function
 def interest_groups(data) -> list:
 
     # intialise base values
@@ -158,19 +200,70 @@ def interest_groups(data) -> list:
     for tuple_pair in data:
         interest_lst = tuple_pair[1]
         sorted_lst = radsort_strings(interest_lst, base, min_base)
-        temp_lst.append((tuple_pair[0], sorted_lst))
+        temp_lst.append([tuple_pair[0], sorted_lst])
 
-    print(temp_lst)    
-    # sort based on length of interest list - counting sort in T1
+    # sort based on length of interest list to arrange closer
+    data = optimized_num_radsort(temp_lst)
+
+    # check for groups
+    group_lst = []
+    pointer_1 = 0
+    pointer_2 = 1
     
+    tmp_lst = []
 
-    # compare item of same length
+    # pointer_1 first item, append name to group
+    tmp_lst.append(data[pointer_1][0])
 
-    return
+    # while loop to loop through data items
+    while pointer_1 < len(data) and pointer_2 < len(data):
+
+        # go through data items
+        list_a = data[pointer_1][1]
+        list_b = data[pointer_2][1]
+
+        # if same length --> do comparison
+        if len(list_a) == len(list_b):
+
+            # if same group, append pointer_2 to tmp_lst
+            if compare_lists(list_a, list_b):
+                tmp_lst.append(data[pointer_2][0])
+
+                # pop the person with same interest
+                data.pop(pointer_2)
+            
+            # if false, continue to scan through
+            else:
+                pointer_2 += 1
+        
+        # else, definitely not in same group (diff length)
+        else:
+
+            # append the current group to group list
+            group_lst.append(tmp_lst)
+            
+            # remove the current person 
+            data.pop(pointer_1)
+
+            # reset the pointers
+            pointer_1 = 0
+            pointer_2 = 1
+
+            # reset tmp_lst
+            tmp_lst = []
+            tmp_lst.append(data[pointer_1][0])
+        
+    group_lst.append(tmp_lst)
+
+    # return list of list with people of same interests
+    return group_lst
 
 
 # Driver code for Task 3
-data = [("nuka", ["birds", "napping"]),("hadley", ["napping birds", "nash equilibria"]),("yaffe", ["rainy evenings", "the colour red", "birds"]),("laurie", ["napping", "birds"]),("kamalani", ["birds", "rainy evenings", "the colour red"])]
+data = [("nuka", ["birds", "napping"]),("hadley", 
+["napping birds", "nash equilibria"]),("yaffe", ["rainy evenings", 
+"the colour red", "birds"]),("laurie", ["napping", "birds"]),
+("kamalani", ["birds", "rainy evenings", "the colour red"])]
+
 print(interest_groups(data))
-# print(data[1][0])
 
