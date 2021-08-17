@@ -259,11 +259,3 @@ def interest_groups(data) -> list:
     return group_lst
 
 
-# Driver code for Task 3
-data = [("nuka", ["birds", "napping"]),("hadley", 
-["napping birds", "nash equilibria"]),("yaffe", ["rainy evenings", 
-"the colour red", "birds"]),("laurie", ["napping", "birds"]),
-("kamalani", ["birds", "rainy evenings", "the colour red"])]
-
-print(interest_groups(data))
-
