@@ -1,6 +1,6 @@
 # Task 1
 # Counting sort
-def counting_sort(a_list, base, exp):
+def counting_sort(a_list: list, base: int, exp: int) -> list:
 
     # initialise the count_array
     count_array = [[] for i in range(base+1)]
@@ -24,7 +24,7 @@ def counting_sort(a_list, base, exp):
 
 
 # Radix sort
-def num_rad_sort(nums, b):
+def num_rad_sort(nums: list, b: int) -> list:
     
     # get the max num in nums
     if len(nums) > 0:
@@ -49,7 +49,7 @@ def num_rad_sort(nums, b):
 # Timing bases
 import time
 
-def base_timer(num_list, base_list):
+def base_timer(num_list: list, base_list: list) -> list:
 
     # an empty list to store the time taken
     output_lst = []
@@ -95,7 +95,7 @@ print(y4)
 
 # Task 3
 # counting sort for string list
-def countsort_strings(lst, col, base, min_base):
+def countsort_strings(lst: list, col: int, base: int, min_base: int) -> list:
 
     # initialise the count_array
     count_array = [[] for i in range(base-1)]
@@ -118,7 +118,7 @@ def countsort_strings(lst, col, base, min_base):
 
 
 # radix sort from msb char --> lsb char
-def radsort_strings(lst, base, min_base):
+def radsort_strings(lst: list, base: int, min_base: int) -> list:
 
     # get the max length in lst of strings
     if len(lst) > 1:
@@ -135,7 +135,18 @@ def radsort_strings(lst, base, min_base):
     return result_lst        
 
 
-def interest_groups(data):
+# compare two equal length lists, returns a Boolean
+def compare_lists(lst_a: list, lst_b: list) -> bool:
+
+    # compare items in list a and list b
+    for item_a in lst_a:
+        for item_b in lst_b:
+            if item_a != item_b:
+                return False
+    return True
+
+
+def interest_groups(data) -> list:
 
     # intialise base values
     base = 26
@@ -147,15 +158,19 @@ def interest_groups(data):
     for tuple_pair in data:
         interest_lst = tuple_pair[1]
         sorted_lst = radsort_strings(interest_lst, base, min_base)
-        temp_lst.append(sorted_lst)
+        temp_lst.append((tuple_pair[0], sorted_lst))
 
-    # compare
-    res = []
+    print(temp_lst)    
+    # sort based on length of interest list - counting sort in T1
+    
 
-    return res
+    # compare item of same length
+
+    return
 
 
 # Driver code for Task 3
 data = [("nuka", ["birds", "napping"]),("hadley", ["napping birds", "nash equilibria"]),("yaffe", ["rainy evenings", "the colour red", "birds"]),("laurie", ["napping", "birds"]),("kamalani", ["birds", "rainy evenings", "the colour red"])]
 print(interest_groups(data))
+# print(data[1][0])
 

@@ -1,4 +1,4 @@
-# FIT2004 Assignment 1
+# Radix Sort
 
 ## Task 1:
 ### Implementation of radix sort to sort a given list of integers into ascending numerical order, using a given base, 
