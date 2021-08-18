@@ -1,3 +1,8 @@
+# Name: Cassandra Chwee (31544878)
+# Title: FIT2004 Assignment 1 (Sem2, 2021)
+# Description: A series of radix sort implementations.
+
+
 # Task 1
 # Counting sort
 def counting_sort(a_list: list, base: int, exp: int) -> list:
