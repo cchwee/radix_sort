@@ -2,9 +2,27 @@
 # Counting sort
 def counting_sort(a_list: list, base: int, exp: int) -> list:
 
+    '''
+    # Function: 
+    This is an implementation of the non-comparison counting sort for a typical
+    list of non-negative integers. The function is called by num_rad_sort
+    recursively to sort of list of nums, a postive integer list.
+
+    # Inputs: 
+    a_list --> is a list which consists of only non-negative integers, 
+    base --> is any integer value that is larger or equal to 2, 
+    exp --> is an integer value of exponent. 
+
+    # Output: 
+    The output is a list which has been sorted. 
+
+    # Time Complexity: 
+    The complexity is O(N + U), where N is the size of the input array, whereas U 
+    is a value which is dependent on the value of the given base.
+    '''
+
     # initialise the count_array
     count_array = [[] for i in range(base+1)]
-    # print("empty count arr: " + str(count_array))
 
     # put in the item as linked list into count_array
     for num in a_list:
@@ -23,6 +41,25 @@ def counting_sort(a_list: list, base: int, exp: int) -> list:
 
 # Radix sort
 def num_rad_sort(nums: list, b: int) -> list:
+
+    '''
+    # Function: 
+    This is an implementation of the non-comparison radix sort for a typical
+    list of non-negative integers. The function sorts from the LSB to MSB, by
+    recursively calling the counting sort for every digit column.
+
+    # Inputs: 
+    nums --> is a list which consists of only non-negative integers, 
+    b --> is any integer value that is larger or equal to 2.
+
+    # Output: 
+    The output is a list which has been sorted. 
+
+    # Time Complexity: 
+    The complexity is O(logbM * (N+b)), where b is the base, M would be the largest 
+    value in nums, follwed by (N+b) which is contributed by the recursive calls of 
+    counting sorts.
+    '''
     
     # get the max num in nums
     if len(nums) > 0:
@@ -30,13 +67,11 @@ def num_rad_sort(nums: list, b: int) -> list:
         for item in nums:
             if item > max_num:
                 max_num = item
-        # print("max num is: " + str(max_num))
 
         exp = 0
         while (max_num // b**exp) > 0:
             nums = counting_sort(nums, b, exp)
             exp += 1
-            # print(nums)
 
     # returns a sorted list nums in asc order
     return nums
@@ -46,8 +81,23 @@ def num_rad_sort(nums: list, b: int) -> list:
 # Task 2
 # Timing bases
 import time
+from typing import List
 
 def base_timer(num_list: list, base_list: list) -> list:
+
+    '''
+    # Function: 
+    This function acts as a timer for num_rad_sort for different bases, in order 
+    for us to examine the runtime of it and understand how base values have effect
+    on runtimes.
+
+    # Inputs: 
+    num_list --> is a list which consists of only non-negative integers, 
+    base_list --> is a list of base with any integer value that is larger or equal 
+    to 2, sorted in ascending order.
+
+    # Output: The output is a list which has been sorted. 
+    '''
 
     # an empty list to store the time taken
     output_lst = []
@@ -70,6 +120,7 @@ def base_timer(num_list: list, base_list: list) -> list:
 
 '''
 # Driver code for Task 2
+'''
 # creates 4 lists of data to test base_timer
 import random
 
@@ -82,18 +133,29 @@ y1 = base_timer(data1, bases1)
 y2 = base_timer(data2, bases1)
 y3 = base_timer(data1, bases2)
 y4 = base_timer(data2, bases2)
-print(bases1)
-print(bases2)
-print(y1)
-print(y2)
-print(y3)
-print(y4)
-'''
+
 
 
 # Task 3
 # counting sort for string list
 def countsort_strings(lst: list, col: int) -> list:
+
+    '''
+    # Function: 
+    This is an implementation of the non-comparison counting sort for a list
+    of strings. The function is called by radsort_strings recursively. 
+
+    # Inputs: 
+    lst --> is a list which consists of only strings, 
+    col --> the column value of the strings
+
+    # Output: 
+    The output is a list of strings which has been sorted based on columns. 
+
+    # Time Complexity: 
+    The complexity is O(N + U), where N is the size of the input array, whereas U 
+    is the number of buckets created in count_array.
+    '''
 
     # initialise the count_array
     # bucket for "no-need to sort", '', ' ', a-z
@@ -135,9 +197,27 @@ def countsort_strings(lst: list, col: int) -> list:
 # radix sort from msb char --> lsb char
 def radsort_strings(lst: list) -> list:
 
+    '''
+    # Function: 
+    This is an implementation of the non-comparison radix sort for a list 
+    of strings. The function sorts the strings by their columns and calls
+    countsort_strings recursively.
+
+    # Inputs: 
+    lst --> is a list which consists of only strings.
+
+    # Output: 
+    The output is a list of strings which has been sorted in lexicographic order. 
+
+    # Time Complexity: 
+    The complexity is O((N+U)*k), where k is dependent on the col values of the 
+    longest string present in the list. (N+U) is contributed by the counting sorts.
+    '''
+
     # get the max length in lst of strings
     if len(lst) > 1:
         max_len = len(lst[0])
+
         for i in range(len(lst)):
             len_str = len(lst[i])
             if len_str > max_len:
@@ -153,10 +233,27 @@ def radsort_strings(lst: list) -> list:
 # optimized count sort to sort based on length to place close tgt
 def optimized_countsort(lst, base, exp):
 
+    '''
+    # Function: 
+    This is an implementation of the non-comparison counting sort for a
+    list of strings based on the length of the list.
+
+    # Inputs: 
+    lst --> is a list which consists of strings, 
+    base --> is any integer value of base (in this case base 10 is used) 
+    exp --> is an integer value of exponent
+
+    # Output: 
+    The output is a list of strings which has been sorted. 
+
+    # Time Complexity: 
+    The complexity is O(N + U), where N is the size of the input array, whereas U 
+    is a value which is dependent on the value of the given base.
+    '''
+
     # initialise the count_array
     count_array = [[] for i in range(base+1)]
 
-    # formula = (number // base**exp) % base 
     # put in the item as linked list into count_array
     for item in lst:
         digit = (len(item[1]) // base ** exp) % base 
@@ -164,6 +261,7 @@ def optimized_countsort(lst, base, exp):
 
     # iterate through count_array and return output
     output_lst = []
+
     for lst in count_array:
         for item in lst:
             output_lst.append(item)
@@ -173,11 +271,31 @@ def optimized_countsort(lst, base, exp):
 
 
 # optimized num rad sort to sort based on length
-def optimized_num_radsort(lst):
+def optimized_num_radsort(lst: list) -> list:
 
+    '''
+    # Function: 
+    This is an implementation of the non-comparison radix sort for a
+    list of strings based on the length of the list.
+
+    # Inputs: 
+    lst --> is a list which consists of only strings 
+
+    # Output: 
+    The output is a list of strings which has been sorted based on the total
+    length of the list. 
+
+    # Time Complexity: 
+    The complexity is O((N+U)*k), where k is the digits in base 10, whereas
+    (N+U) is contributed by the recursive calls of counting sorts.
+    '''
+    
+    # checks for the need to sort
     if len(lst) > 1:
+
         # get max length 
         max_len = len(lst[0][1])
+
         for item in lst:
             interest_lst = item[1]
             if len(interest_lst) > max_len:
@@ -195,20 +313,67 @@ def optimized_num_radsort(lst):
 # compare two equal length lists, returns a Boolean
 def compare_lists(lst_a: list, lst_b: list) -> bool:
 
+    '''
+    # Function: 
+    This is an simple implementation of comapring elements in
+    two lists.
+
+    # Inputs: 
+    lst_a, lst_b --> a list which are to be compared
+
+    # Output
+    returns a boolean value True or False.
+
+    # Time Complexity: 
+    The complexity is O(n) if both lists have length n, and O(1) 
+    if the lists have different lengths. Since there is a constraint of 
+    comparing only same-length lists in the caller fucntion,
+    the time complexity for this function is always O(1), constant time.
+    '''
+
     # compare items in list a and list b
     for i in range(len(lst_a)):
+
         if lst_a[i] != lst_b[i]:
             return False
+
     return True
 
 
 # perform in place swaps
 def swap(lst, i, j):
+
+    '''
+    # Function: 
+    This is an simple implementation of swapping elements in place.
+
+    # Inputs: 
+    lst --> a list where the swap is taking place at. 
+    i --> index value
+    j --> index value
+
+    # Time Complexity: 
+    The complexity is O(1), constant complexity.
+    '''
+
     lst[i], lst[j] = lst[j], lst[i]
 
 
 # place the same groups close to each another
 def groups(lst):
+
+    '''
+    # Function: 
+    This function groups the tuple list together based on the 
+    same interests in the interest list.
+
+    # Inputs: 
+    lst --> a list of tuples which are to be grouped
+
+    # Time Complexity: 
+    The complexity is O(n) for worst case, where the algorithm 
+    has to go through all n list items to find the same groups.
+    '''
 
     pointer1 = 0
     pointer2 = 1
@@ -218,18 +383,18 @@ def groups(lst):
         list_a = lst[pointer1][1]
         list_b = lst[pointer2][1]
 
-        # same length
+        # same length list --> compare
         if len(list_a) == len(list_b):
 
-            # same
+            # same interests groups
             if compare_lists(list_a, list_b):
                 
-                # swap
+                # swap to place them together
                 swap(lst, pointer1+1, pointer2)
                 pointer1 += 1
                 pointer2 += 1
 
-            # not same
+            # diff interest --> continue
             else:
                 pointer2 += 1
                 
@@ -241,6 +406,20 @@ def groups(lst):
 
 # generate list of groups of people based on same interest
 def group_ppl(lst):
+
+    '''
+    # Function: 
+    This function generates the list of groups of people based
+    on the same interests in the interest list.
+
+    # Inputs: 
+    lst --> a list of tuples which are to be grouped
+
+    # Time Complexity: 
+    The complexity is O(n), where the algorithm 
+    has to go through all n list items to find the same groups.
+    '''
+
     point_a = 0
     point_b = 1
     group_lst = []
@@ -253,6 +432,7 @@ def group_ppl(lst):
         lsta = lst[point_a][1]
         lstb = lst[point_b][1]
 
+        # same interests groups
         if compare_lists(lsta, lstb):
             tmp.append(lst[point_b][0])
             point_b += 1
