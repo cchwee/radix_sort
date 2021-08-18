@@ -119,8 +119,8 @@ def base_timer(num_list: list, base_list: list) -> list:
 
 
 '''
-# Driver code for Task 2
-'''
+# Driver code for Task 2 - done in google colab cuz my pc pip install suks 
+
 # creates 4 lists of data to test base_timer
 import random
 
@@ -134,6 +134,26 @@ y2 = base_timer(data2, bases1)
 y3 = base_timer(data1, bases2)
 y4 = base_timer(data2, bases2)
 
+fig1 = plt.figure()
+plt.plot(bases1, y1, label = "line y1")
+plt.plot(bases1, y2, label = "line y2")
+plt.xscale('log')
+plt.xlabel('log(bases1)')
+plt.ylabel('Runtime')
+plt.title('Graph of y1 and y2 vs log(bases1)')
+plt.legend()
+plt.show()
+
+fig2 = plt.figure()
+plt.plot(bases2, y3, label = "line y3")
+plt.plot(bases2, y4, label = "line y4")
+plt.xlabel('bases2')
+plt.ylabel('bases2')
+plt.title('Graph of y3 and y4 vs bases2')
+plt.legend()
+plt.show()
+
+'''
 
 
 # Task 3
@@ -432,19 +452,32 @@ def group_ppl(lst):
         lsta = lst[point_a][1]
         lstb = lst[point_b][1]
 
-        # same interests groups
-        if compare_lists(lsta, lstb):
-            tmp.append(lst[point_b][0])
-            point_b += 1
+        # if length is the same
+        if len(lsta) == len(lstb):
 
+            # same interests groups
+            if compare_lists(lsta, lstb):
+                tmp.append(lst[point_b][0])
+                point_b += 1
+
+            else:
+                group_lst.append(tmp)
+
+                # reset tmp
+                point_a = point_b
+                point_b = point_a + 1
+                tmp = []
+                tmp.append(lst[point_a][0])
+        
+        # different length of lists
         else:
-            group_lst.append(tmp)
+                group_lst.append(tmp)
 
-            # reset tmp
-            point_a = point_b
-            point_b = point_a + 1
-            tmp = []
-            tmp.append(lst[point_a][0])
+                # reset tmp
+                point_a = point_b
+                point_b = point_a + 1
+                tmp = []
+                tmp.append(lst[point_a][0])
     
     group_lst.append(tmp)
 
@@ -454,11 +487,25 @@ def group_ppl(lst):
 # interest group function
 def interest_groups(data) -> list:
 
-    # if data is empty, return []
+    '''
+    # Function: 
+    This function generates the list of lists of people that have 
+    identical interests.
+
+    # Inputs: 
+    data --> is a list, where each element is a 2-element tuple representing a person.
+            First element is their name, and second is their interest list.
+
+    # Time Complexity: 
+    The complexity is O(NM), where N is the number of elements in data, and M is
+    the max num of chars among all sets of interest.
+    '''
+
+    # if data is empty, return [], O(1)
     if len(data) == 0:
         return []
 
-    # if data only has one person, return [person name]
+    # if data only has one person, return [person name], O(1)
     elif len(data) == 1:
         return [[data[0][0]]]
     
@@ -475,7 +522,7 @@ def interest_groups(data) -> list:
         
         # sort based on length of interest list to arrange closer
         data_copied = optimized_num_radsort(temp_lst)
-        
+
         # make groups next to each other
         groups(data_copied)
 
