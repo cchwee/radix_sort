@@ -95,39 +95,72 @@ print(y4)
 # counting sort for string list
 def countsort_strings(lst: list, col: int) -> list:
 
-    # initialise the count_array, a-z with ' ' and ''
-    count_array = [[] for i in range(28)]
+    # initialise the count_array
+    # bucket for "no-need to sort", '', ' ', a-z
+    count_array = [[] for i in range(29)]
 
-    # sort according to char[col]
+    # # sort according to char[col]
+    # for interest in lst:
+
+    #     # if empty string
+    #     if interest == '':
+    #         count_array[0].append(interest)
+
+    #     # if column dont need to be sorted
+    #     elif len(interest)-1 < col:
+            
+    #         # if interest is a space
+    #         if interest == ' ':
+    #             count_array[1].append(interest)
+            
+    #         # if interest is an alphabet
+    #         else: 
+    #             count_array[2].append(interest)
+
+    #     # # if space 
+    #     # elif interest == ' ':
+    #     #     count_array[1].append(interest)
+       
+    #    # sort the list according to char[col]
+    #     else:
+    #         if interest[col] == '':
+    #             count_array[0].append(interest)
+
+    #         # if space 
+    #         elif interest[col] == ' ':
+    #             count_array[1].append(interest) 
+            
+    #         else:
+    #             val = ord(interest[col]) - ord('a') + 2
+    #             count_array[val].append(interest)
+    # print(count_array)
+
+    # four scenarios: need to sort('', ' ', a-z), no need to sort
     for interest in lst:
-
-        # if empty string
+        
+        # special case for empty string
         if interest == '':
-            count_array[0].append(interest)
-
-        # if space 
-        elif interest == ' ':
             count_array[1].append(interest)
 
-        # if column dont need to be sorted
-        elif len(interest)-1 < col:
-            count_array[2].append(interest)
-       
-       # sort the list according to char[col]
+        # short strings --> no need to sort
+        elif len(interest) -1 < col and interest != '':
+            count_array[0].append(interest)
+        
+        # has column, need to sort
         else:
-            if interest[col] == '':
-                count_array[0].append(interest)
-
-            # if space 
-            elif interest[col] == ' ':
-                count_array[1].append(interest) 
             
+            # if col is a space --> put in ' ' bucket
+            if interest[col] == ' ':
+                count_array[2].append(interest)
+            
+            # if col is a-z char, sort as normal
             else:
-                val = ord(interest[col]) - ord('a') + 2
+                val = ord(interest[col]) - ord('a') + 3
                 count_array[val].append(interest)
 
     # return output sorted list based on col
     output_lst = []
+    
     for sorted_lst in count_array:
         for interest in sorted_lst:
             output_lst.append(interest)
@@ -145,9 +178,10 @@ def radsort_strings(lst: list) -> list:
             len_str = len(lst[i])
             if len_str > max_len:
                 max_len = len_str
-
+        print(max_len)
         # perform sort from LSB col --> MSB col
         for col in range((max_len-1), -1, -1):
+            print("col" + str(col), lst)
             lst = countsort_strings(lst, col)
 
     return lst        
@@ -305,40 +339,13 @@ def interest_groups(data) -> list:
         # return list of list with people of same interests
         return sorted_name
 
-
-
-# data = [("arthur", ["coding", "playing video games", "math", "binging youtube"]),
-#                 ("ash", ["becoming the greatest pokemon master of all time"]),
-#                 ("ian", ["roasting other units", "teaching computer science"]),
-#                 ("phoenix", ["legal assistance", "bluffing his way to victory"]),
-#                 ("barbara", ["singing", "dancing", "becoming an idol"])]
-# data = [("nuka", ["birds", "napping"]),
-#                 ("hadley", ["napping birds", "nash equilibria"]),
-#                 ("yaffe", ["rainy evenings", "the colour red", "birds"]),
-#                 ("laurie", ["napping", "birds"]),
-#                 ("kamalani", ["birds", "rainy evenings", "the colour red"])]
-# data = [("tony", ["rich", "billionaire", "superhero"]),
-#                 ("bruce", ["superhero", "rich", "billionaire"]),
-#                 ("nolan", ["look at what they need to mimic a fraction of our power", "think mark think", "thats the neat part you dont"]),
-#                 ("peter", ["superhero"]),
-#                 ("steve", ["from another time", "superhero"])]
-# data = [("john", ["coding"]),
-#                 ("arthur", ["coding"]),
-#                 ("jacky", ["coding"]),
-#                 ("zach", ["coding"]),
-#                 ("laura", ["coding"]),
-#                 ("desmond", ["coding"]),
-#                 ("benny", ["coding"]),
-#                 ("casper", ["coding"])
-# data = [("jack", ["coding"]),
-#         ("nathan", ["teaching computer science"]),
-#         ("ian", ["educating students on algorithms and data structures"]),
-#         ("arthur", ["programming stuff"]),
-#         ("doris", ["chilling"]),
-#         ("timmy", ["feeding pigeons"]),
-#         ("aj", ["playing games"]),
-#         ("dawn", ["catching pokemon"]),
-#         ("light", ["killing people with a death note"])]
-data = [("arthur", ["coding", "math"])]
+# print(sorted(['  ', ' ', '', 'a', 'a ']))
+# print(radsort_strings(['  ', ' ', '', 'a', 'a ']))
+data = [("arthur", ["   ", " "]),
+                ("ethan", ["                       "]),
+                ("dave", [" ", " ", " ", " ", " ", " "]),
+                ("nathan", [" ", "      "]),
+                ("apple", [" ", "   "]),
+                ("ian", ["    "])]
 print(interest_groups(data))
 
