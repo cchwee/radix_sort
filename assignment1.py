@@ -124,7 +124,6 @@ def countsort_strings(lst: list, col: int) -> list:
             
             else:
                 val = ord(interest[col]) - ord('a') + 2
-                print(interest[col], val)
                 count_array[val].append(interest)
 
     # return output sorted list based on col
@@ -149,9 +148,7 @@ def radsort_strings(lst: list) -> list:
 
         # perform sort from LSB col --> MSB col
         for col in range((max_len-1), -1, -1):
-            result_lst = countsort_strings(lst, col)
-
-        lst = result_lst
+            lst = countsort_strings(lst, col)
 
     return lst        
 
@@ -209,92 +206,106 @@ def compare_lists(lst_a: list, lst_b: list) -> bool:
             return False
     return True
 
+# check for groups in lists of list
+def check_groups(lst):
+
+    # check for groups
+    group_lst = []
+    pointer_1 = 0
+    pointer_2 = 1
+
+    # pointer_1 first item, append name to group
+    tmp_lst = []
+    tmp_lst.append(lst[pointer_1][0])
+
+    # while loop to loop through data items
+    while pointer_1 < len(lst) and pointer_2 < len(lst):
+
+        # go through data items
+        list_a = lst[pointer_1][1]
+        list_b = lst[pointer_2][1]
+
+        # if same length --> do comparison
+        if len(list_a) == len(list_b):
+
+            # if same group, append pointer_2 to tmp_lst
+            if compare_lists(list_a, list_b):
+                tmp_lst.append(lst[pointer_2][0])
+
+                # pop the person with same interest
+                lst.pop(pointer_2)
+            
+            # if false, continue to scan through
+            else:
+                pointer_2 += 1
+        
+        # else, definitely not in same group (diff length)
+        else:
+
+            # append the current group to group list
+            group_lst.append(tmp_lst)
+
+            # remove the current person 
+            lst.pop(pointer_1)
+        
+            # reset the pointers
+            pointer_1 = 0
+            pointer_2 = 1
+
+            # reset tmp_lst
+            tmp_lst = []
+            tmp_lst.append(lst[pointer_1][0])
+    
+    # remaining in tmp_lst belongs to previous group
+    group_lst.append(tmp_lst)
+    lst.pop(pointer_1)
+
+    # remaining list append to new group
+    while len(lst) != 0:
+        group_lst.append([lst[0][0]])
+        lst.pop(0)
+
+    return group_lst
+
 
 # interest group function
 def interest_groups(data) -> list:
 
-    # do radix sort on interest list in each tuple
-    if len(data) > 1:
+    # if data is empty, return []
+    if len(data) == 0:
+        return []
 
+    # if data only has one person, return [person name]
+    elif len(data) == 1:
+        return [data[0][0]]
+    
+    # if data has 2 persons or more
+    else:
+        
+         # do radix sort on interest list in each tuple
         temp_lst = []
 
         for tuple_pair in data:
             interest_lst = tuple_pair[1]
             sorted_lst = radsort_strings(interest_lst)
             temp_lst.append([tuple_pair[0], sorted_lst])
-        print(temp_lst)
+
         # sort based on length of interest list to arrange closer
         data_copied = optimized_num_radsort(temp_lst)
-        print(data_copied)
+
         # check for groups
-        group_lst = []
-        pointer_1 = 0
-        pointer_2 = 1
-        count = 0
+        groups_data = check_groups(data_copied)
 
-        # pointer_1 first item, append name to group
-        tmp_lst = []
-        tmp_lst.append(data_copied[pointer_1][0])
-        count += 1
+        # sort name in list 
+        sorted_name = []
+        for name_lst in groups_data:
+            name_lst_sort = radsort_strings(name_lst)
+            sorted_name.append(name_lst_sort) 
 
-        # while loop to loop through data items
-        while pointer_1 < len(data_copied) and pointer_2 < len(data_copied):
+        # return list of list with people of same interests
+        return sorted_name
 
-            # go through data items
-            list_a = data_copied[pointer_1][1]
-            list_b = data_copied[pointer_2][1]
 
-            # if same length --> do comparison
-            if len(list_a) == len(list_b):
-
-                # if same group, append pointer_2 to tmp_lst
-                if compare_lists(list_a, list_b):
-                    tmp_lst.append(data_copied[pointer_2][0])
-                    count += 1
-
-                    # pop the person with same interest
-                    data_copied.pop(pointer_2)
-                
-                # if false, continue to scan through
-                else:
-                    pointer_2 += 1
-            
-            # else, definitely not in same group (diff length)
-            else:
-
-                # append the current group to group list
-                group_lst.append(tmp_lst)
-
-                # remove the current person 
-                data_copied.pop(pointer_1)
-            
-                # reset the pointers
-                pointer_1 = 0
-                pointer_2 = 1
-
-                # reset tmp_lst
-                tmp_lst = []
-                tmp_lst.append(data_copied[pointer_1][0])
-            
-        # case when comparing same length and same item on last loop
-        group_lst.append(tmp_lst)
-
-        # case when comparing same length but not same on last loop
-        if count != len(data):
-            group_lst.append([data_copied[-1][0]])
-
-        data = group_lst
-
-    # sort name in list 
-    sorted_name = []
-    for name_lst in data:
-        name_lst_sort = radsort_strings(name_lst)
-        sorted_name.append(name_lst_sort)
-
-    data = sorted_name
-
-    # return list of list with people of same interests
-    return data
 
 # data = [("arthur", ["coding", "playing video games", "math", "binging youtube"]),
 #                 ("ash", ["becoming the greatest pokemon master of all time"]),
@@ -306,5 +317,28 @@ def interest_groups(data) -> list:
 #                 ("yaffe", ["rainy evenings", "the colour red", "birds"]),
 #                 ("laurie", ["napping", "birds"]),
 #                 ("kamalani", ["birds", "rainy evenings", "the colour red"])]
-# print(interest_groups(data))
+# data = [("tony", ["rich", "billionaire", "superhero"]),
+#                 ("bruce", ["superhero", "rich", "billionaire"]),
+#                 ("nolan", ["look at what they need to mimic a fraction of our power", "think mark think", "thats the neat part you dont"]),
+#                 ("peter", ["superhero"]),
+#                 ("steve", ["from another time", "superhero"])]
+# data = [("john", ["coding"]),
+#                 ("arthur", ["coding"]),
+#                 ("jacky", ["coding"]),
+#                 ("zach", ["coding"]),
+#                 ("laura", ["coding"]),
+#                 ("desmond", ["coding"]),
+#                 ("benny", ["coding"]),
+#                 ("casper", ["coding"])
+data = [("jack", ["coding"]),
+        ("nathan", ["teaching computer science"]),
+        ("ian", ["educating students on algorithms and data structures"]),
+        ("arthur", ["programming stuff"]),
+        ("doris", ["chilling"]),
+        ("timmy", ["feeding pigeons"]),
+        ("aj", ["playing games"]),
+        ("dawn", ["catching pokemon"]),
+        ("light", ["killing people with a death note"])]
+
+print(interest_groups(data))
 
