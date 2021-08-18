@@ -99,42 +99,6 @@ def countsort_strings(lst: list, col: int) -> list:
     # bucket for "no-need to sort", '', ' ', a-z
     count_array = [[] for i in range(29)]
 
-    # # sort according to char[col]
-    # for interest in lst:
-
-    #     # if empty string
-    #     if interest == '':
-    #         count_array[0].append(interest)
-
-    #     # if column dont need to be sorted
-    #     elif len(interest)-1 < col:
-            
-    #         # if interest is a space
-    #         if interest == ' ':
-    #             count_array[1].append(interest)
-            
-    #         # if interest is an alphabet
-    #         else: 
-    #             count_array[2].append(interest)
-
-    #     # # if space 
-    #     # elif interest == ' ':
-    #     #     count_array[1].append(interest)
-       
-    #    # sort the list according to char[col]
-    #     else:
-    #         if interest[col] == '':
-    #             count_array[0].append(interest)
-
-    #         # if space 
-    #         elif interest[col] == ' ':
-    #             count_array[1].append(interest) 
-            
-    #         else:
-    #             val = ord(interest[col]) - ord('a') + 2
-    #             count_array[val].append(interest)
-    # print(count_array)
-
     # four scenarios: need to sort('', ' ', a-z), no need to sort
     for interest in lst:
         
@@ -178,17 +142,15 @@ def radsort_strings(lst: list) -> list:
             len_str = len(lst[i])
             if len_str > max_len:
                 max_len = len_str
-        print(max_len)
+
         # perform sort from LSB col --> MSB col
         for col in range((max_len-1), -1, -1):
-            print("col" + str(col), lst)
             lst = countsort_strings(lst, col)
 
     return lst        
 
 
-
-# optimized count sort to sort based on length
+# optimized count sort to sort based on length to place close tgt
 def optimized_countsort(lst, base, exp):
 
     # initialise the count_array
@@ -239,6 +201,7 @@ def compare_lists(lst_a: list, lst_b: list) -> bool:
         if lst_a[i] != lst_b[i]:
             return False
     return True
+
 
 # check for groups in lists of list
 def check_groups(lst):
@@ -339,13 +302,4 @@ def interest_groups(data) -> list:
         # return list of list with people of same interests
         return sorted_name
 
-# print(sorted(['  ', ' ', '', 'a', 'a ']))
-# print(radsort_strings(['  ', ' ', '', 'a', 'a ']))
-data = [("arthur", ["   ", " "]),
-                ("ethan", ["                       "]),
-                ("dave", [" ", " ", " ", " ", " ", " "]),
-                ("nathan", [" ", "      "]),
-                ("apple", [" ", "   "]),
-                ("ian", ["    "])]
-print(interest_groups(data))
 
