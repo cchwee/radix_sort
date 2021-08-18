@@ -161,7 +161,6 @@ def optimized_countsort(lst, base, exp):
     for item in lst:
         digit = (len(item[1]) // base ** exp) % base 
         count_array[digit].append(item)
-    # print("now: " + str(count_array))
 
     # iterate through count_array and return output
     output_lst = []
@@ -203,68 +202,75 @@ def compare_lists(lst_a: list, lst_b: list) -> bool:
     return True
 
 
-# check for groups in lists of list
-def check_groups(lst):
+# perform in place swaps
+def swap(lst, i, j):
+    lst[i], lst[j] = lst[j], lst[i]
 
-    # check for groups
-    group_lst = []
-    pointer_1 = 0
-    pointer_2 = 1
 
-    # pointer_1 first item, append name to group
-    tmp_lst = []
-    tmp_lst.append(lst[pointer_1][0])
+# place the same groups close to each another
+def groups(lst):
 
-    # while loop to loop through data items
-    while pointer_1 < len(lst) and pointer_2 < len(lst):
+    pointer1 = 0
+    pointer2 = 1
 
-        # go through data items
-        list_a = lst[pointer_1][1]
-        list_b = lst[pointer_2][1]
+    while pointer1 < len(lst) and pointer2 < len(lst):
 
-        # if same length --> do comparison
+        list_a = lst[pointer1][1]
+        list_b = lst[pointer2][1]
+
+        # same length
         if len(list_a) == len(list_b):
 
-            # if same group, append pointer_2 to tmp_lst
+            # same
             if compare_lists(list_a, list_b):
-                tmp_lst.append(lst[pointer_2][0])
+                
+                # swap
+                swap(lst, pointer1+1, pointer2)
+                pointer1 += 1
+                pointer2 += 1
 
-                # pop the person with same interest
-                lst.pop(pointer_2)
-            
-            # if false, continue to scan through
+            # not same
             else:
-                pointer_2 += 1
-        
-        # else, definitely not in same group (diff length)
+                pointer2 += 1
+                
+        # diff length
         else:
+            pointer1 += 1
+            pointer2 = pointer1 + 1
 
-            # append the current group to group list
-            group_lst.append(tmp_lst)
 
-            # remove the current person 
-            lst.pop(pointer_1)
+# generate list of groups of people based on same interest
+def group_ppl(lst):
+    point_a = 0
+    point_b = 1
+    group_lst = []
+
+    tmp = []
+    tmp.append(lst[point_a][0])
+
+    while point_a < len(lst) and point_b < len(lst):
         
-            # reset the pointers
-            pointer_1 = 0
-            pointer_2 = 1
+        lsta = lst[point_a][1]
+        lstb = lst[point_b][1]
 
-            # reset tmp_lst
-            tmp_lst = []
-            tmp_lst.append(lst[pointer_1][0])
+        if compare_lists(lsta, lstb):
+            tmp.append(lst[point_b][0])
+            point_b += 1
+
+        else:
+            group_lst.append(tmp)
+
+            # reset tmp
+            point_a = point_b
+            point_b = point_a + 1
+            tmp = []
+            tmp.append(lst[point_a][0])
     
-    # remaining in tmp_lst belongs to previous group
-    group_lst.append(tmp_lst)
-    lst.pop(pointer_1)
-
-    # remaining list append to new group
-    while len(lst) != 0:
-        group_lst.append([lst[0][0]])
-        lst.pop(0)
+    group_lst.append(tmp)
 
     return group_lst
 
-
+            
 # interest group function
 def interest_groups(data) -> list:
 
@@ -286,12 +292,15 @@ def interest_groups(data) -> list:
             interest_lst = tuple_pair[1]
             sorted_lst = radsort_strings(interest_lst)
             temp_lst.append([tuple_pair[0], sorted_lst])
-
+        
         # sort based on length of interest list to arrange closer
         data_copied = optimized_num_radsort(temp_lst)
+        
+        # make groups next to each other
+        groups(data_copied)
 
-        # check for groups
-        groups_data = check_groups(data_copied)
+        # generating list of names based on same group 
+        groups_data = group_ppl(data_copied)
 
         # sort name in list 
         sorted_name = []

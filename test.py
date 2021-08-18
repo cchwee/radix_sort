@@ -1,77 +1,77 @@
-# """
-# Test cases for FIT2004 2021 S2 Assignment 1 Task 1.
+# # """
+# # Test cases for FIT2004 2021 S2 Assignment 1 Task 1.
 
-# Assumes str_rad_sort (or whatever you call it) returns a new sorted copy
-# instead of sorting in place. Some minor modifications are required for
-# the test cases to work otherwise.
-# """
+# # Assumes str_rad_sort (or whatever you call it) returns a new sorted copy
+# # instead of sorting in place. Some minor modifications are required for
+# # the test cases to work otherwise.
+# # """
 
-# import unittest
+# # import unittest
 
-# # If your code is stored in other files,
-# # change the import path below
-# from assignment1 import *
-
-
-# # If your radix sort for strings function is not named
-# # str_rad_sort, uncomment the line below and set the
-# # r-value to the name of the function for it to work.
-# # This unifies the name of the radix sort function below.
-
-# str_rad_sort = radsort_strings
+# # # If your code is stored in other files,
+# # # change the import path below
+# # from assignment1 import *
 
 
-# class TestStrRadixSort(unittest.TestCase):
+# # # If your radix sort for strings function is not named
+# # # str_rad_sort, uncomment the line below and set the
+# # # r-value to the name of the function for it to work.
+# # # This unifies the name of the radix sort function below.
 
-#     def test1(self):
-#         """ Edge case: List is empty.
-#         Author: Ci Leong
-#         """
-#         arr = []
-#         result = str_rad_sort(arr)
-#         self.assertEqual(result, [], msg=f'Cannot sort empty lists. Expected [], got {result}.')
-
-#     def test2(self):
-#         """ Tests whether strings are sorted lexicographically.
-#         Failure of this test could mean strings are sorted by numerical value.
-#         Or... it could be processed in other orders as well (might not even be ordered LOL).
-#         Author: Ci Leong
-#         """
-#         arr1 = ['ab', 'c']
-#         arr2 = ['c', 'ab']
-#         result1 = str_rad_sort(arr1)
-#         result2 = str_rad_sort(arr2)
-#         expected_result = ['ab', 'c']
-#         self.assertTrue(result1 == result2 == expected_result,
-#         msg=f'Strings are not sorted lexicographically or unsorted. Expected {expected_result}, got {result1} and {result2} (both must be correct)')
-
-#     def test3(self):
-#         """ Tests if ' ' and '' are wrongly placed in 'a''s bin.
-#         Failing this test case probably means there is no separated bins for '' and ' '.
-#         Author: Ci Leong
-#         """
-#         arr = [' ', '']
-#         result = str_rad_sort(arr)
-#         expected_result = ['', ' ']
-#         self.assertEqual(result, expected_result, msg=f'Expected {expected_result}, got {result}.')
-
-#         arr = ['a', '']
-#         result = str_rad_sort(arr)
-#         expected_result = ['', 'a']
-#         self.assertEqual(result, expected_result, msg=f'Expected {expected_result}, got {result}.')
+# # str_rad_sort = radsort_strings
 
 
-# class TestInterestGroups(unittest.TestCase):
+# # class TestStrRadixSort(unittest.TestCase):
 
-#     def setUp(self):
-#         pass
+# #     def test1(self):
+# #         """ Edge case: List is empty.
+# #         Author: Ci Leong
+# #         """
+# #         arr = []
+# #         result = str_rad_sort(arr)
+# #         self.assertEqual(result, [], msg=f'Cannot sort empty lists. Expected [], got {result}.')
 
-#     def test1(self):
-#         pass
+# #     def test2(self):
+# #         """ Tests whether strings are sorted lexicographically.
+# #         Failure of this test could mean strings are sorted by numerical value.
+# #         Or... it could be processed in other orders as well (might not even be ordered LOL).
+# #         Author: Ci Leong
+# #         """
+# #         arr1 = ['ab', 'c']
+# #         arr2 = ['c', 'ab']
+# #         result1 = str_rad_sort(arr1)
+# #         result2 = str_rad_sort(arr2)
+# #         expected_result = ['ab', 'c']
+# #         self.assertTrue(result1 == result2 == expected_result,
+# #         msg=f'Strings are not sorted lexicographically or unsorted. Expected {expected_result}, got {result1} and {result2} (both must be correct)')
+
+# #     def test3(self):
+# #         """ Tests if ' ' and '' are wrongly placed in 'a''s bin.
+# #         Failing this test case probably means there is no separated bins for '' and ' '.
+# #         Author: Ci Leong
+# #         """
+# #         arr = [' ', '']
+# #         result = str_rad_sort(arr)
+# #         expected_result = ['', ' ']
+# #         self.assertEqual(result, expected_result, msg=f'Expected {expected_result}, got {result}.')
+
+# #         arr = ['a', '']
+# #         result = str_rad_sort(arr)
+# #         expected_result = ['', 'a']
+# #         self.assertEqual(result, expected_result, msg=f'Expected {expected_result}, got {result}.')
+
+
+# # class TestInterestGroups(unittest.TestCase):
+
+# #     def setUp(self):
+# #         pass
+
+# #     def test1(self):
+# #         pass
         
 
-# if __name__ == '__main__':
-#     unittest.main()
+# # if __name__ == '__main__':
+# #     unittest.main()
 
 """ Test cases for Question 3 of FIT2004 Assignment """
 
@@ -309,3 +309,81 @@ class TestInterestGroups(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+# """
+# I mutated the original list so if you did not, please change it TQ 
+# """
+# from assignment1 import *
+# import unittest
+
+# class TestNumRadixSort(unittest.TestCase):
+
+#     """
+#     TASK 1
+#     """
+#     def test(self):
+#         """
+#         Description : Based on assignment specification and data
+#         """
+#         nums = [43, 101, 22, 27, 5, 50, 15]
+#         your_input = num_rad_sort(nums, 10)
+#         expected_result = [5, 15, 22, 27, 43, 50, 101]
+#         self.assertEqual(your_input, expected_result, "The output does not equal to the inbuilt sort function value (TEST)")
+
+#     def test1(self):
+#         """
+#         Description : Check for when list is empty
+#         """
+#         nums = []
+#         your_input = num_rad_sort(nums, 10)
+#         result = nums
+#         self.assertEqual(your_input, [], "It did not pass the empty list check (TEST1)")
+    
+#     def test2(self):
+#         """
+#         Description : Check for when everything is of equal element
+#         """
+#         nums = [2,2,2,2,2,2,2]
+#         expected_result = sorted(nums)
+#         your_input = num_rad_sort(nums, 10)
+#         result = nums
+#         self.assertEqual(your_input, expected_result, "The output does not equal to the inbuilt sort function value (TEST2)")
+    
+#     def test3(self):
+#         """
+#         Description : Check if it's suitable to be use for bases from 2 - 1000
+#         """
+#         nums = [43, 101, 22, 27, 5, 50, 15]
+#         expected_result = [5, 15, 22, 27, 43, 50, 101]
+#         for base in range(2, 1000):
+#             with self.subTest(base=base):
+#                 your_input = num_rad_sort(nums, 10)
+#                 result = nums
+#                 self.assertEqual(your_input, expected_result, "The output does not equal to the inbuilt sort function value (TEST3)")
+
+#     """
+#     TASK 3 
+#     """
+#     def test4(self):
+#         """
+#         Description : Testing to check if interest group is working as expected
+#         """
+#         data = [("nuka", ["birds", "napping"]),
+#         ("hadley", ["napping birds", "nash equilibria"]),
+#         ("yaffe", ["rainy evenings", "the colour red", "birds"]),
+#         ("kamalani", ["birds", "rainy evenings", "the colour red"]),
+#         ("laurie", ["napping", "birds"])]
+#         expected_result = [['laurie', 'nuka'], ['hadley'], ['kamalani', 'yaffe']]
+#         self.assertEqual(interest_groups(data),expected_result, "The result for test 4 does not equal to the expected result (TEST4)")
+
+#     def test5(self):
+#         """
+#         Description : Checking if radix_sort_string is working as intended
+#         """
+#         data = ["bcharacter","similar", "similar","as","ab","bchar","gabd","aa"]
+#         expected_result = sorted(data)
+#         your_input = radsort_strings(data)
+#         self.assertEqual(your_input,expected_result, "The result for test 4 does not equal to the expected result (TEST4)")
+
+
+# if __name__ == '__main__':
+#     unittest.main()
