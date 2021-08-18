@@ -277,7 +277,7 @@ def interest_groups(data) -> list:
 
     # if data only has one person, return [person name]
     elif len(data) == 1:
-        return [data[0][0]]
+        return [[data[0][0]]]
     
     # if data has 2 persons or more
     else:
@@ -330,15 +330,15 @@ def interest_groups(data) -> list:
 #                 ("desmond", ["coding"]),
 #                 ("benny", ["coding"]),
 #                 ("casper", ["coding"])
-data = [("jack", ["coding"]),
-        ("nathan", ["teaching computer science"]),
-        ("ian", ["educating students on algorithms and data structures"]),
-        ("arthur", ["programming stuff"]),
-        ("doris", ["chilling"]),
-        ("timmy", ["feeding pigeons"]),
-        ("aj", ["playing games"]),
-        ("dawn", ["catching pokemon"]),
-        ("light", ["killing people with a death note"])]
-
+# data = [("jack", ["coding"]),
+#         ("nathan", ["teaching computer science"]),
+#         ("ian", ["educating students on algorithms and data structures"]),
+#         ("arthur", ["programming stuff"]),
+#         ("doris", ["chilling"]),
+#         ("timmy", ["feeding pigeons"]),
+#         ("aj", ["playing games"]),
+#         ("dawn", ["catching pokemon"]),
+#         ("light", ["killing people with a death note"])]
+data = [("arthur", ["coding", "math"])]
 print(interest_groups(data))
 
