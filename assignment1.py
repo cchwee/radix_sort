@@ -311,4 +311,3 @@ def interest_groups(data) -> list:
         # return list of list with people of same interests
         return sorted_name
 
-
