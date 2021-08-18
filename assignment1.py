@@ -6,12 +6,10 @@ def counting_sort(a_list: list, base: int, exp: int) -> list:
     count_array = [[] for i in range(base+1)]
     # print("empty count arr: " + str(count_array))
 
-    # formula = (number // base**exp) % base 
     # put in the item as linked list into count_array
     for num in a_list:
         digit = (num // base ** exp) % base 
         count_array[digit].append(num)
-    # print("now: " + str(count_array))
 
     # iterate through count_array and return output
     output_lst = []
@@ -95,18 +93,39 @@ print(y4)
 
 # Task 3
 # counting sort for string list
-def countsort_strings(lst: list, col: int, base: int, min_base: int) -> list:
+def countsort_strings(lst: list, col: int) -> list:
 
-    # initialise the count_array
-    count_array = [[] for i in range(base-1)]
+    # initialise the count_array, a-z with ' ' and ''
+    count_array = [[] for i in range(28)]
 
     # sort according to char[col]
     for interest in lst:
-        if len(interest)-1 < col or interest[col] == " ":
+
+        # if empty string
+        if interest == '':
             count_array[0].append(interest)
+
+        # if space 
+        elif interest == ' ':
+            count_array[1].append(interest)
+
+        # if column dont need to be sorted
+        elif len(interest)-1 < col:
+            count_array[2].append(interest)
+       
+       # sort the list according to char[col]
         else:
-            val = ord(interest[col]) - min_base
-            count_array[val].append(interest)
+            if interest[col] == '':
+                count_array[0].append(interest)
+
+            # if space 
+            elif interest[col] == ' ':
+                count_array[1].append(interest) 
+            
+            else:
+                val = ord(interest[col]) - ord('a') + 2
+                print(interest[col], val)
+                count_array[val].append(interest)
 
     # return output sorted list based on col
     output_lst = []
@@ -120,8 +139,6 @@ def countsort_strings(lst: list, col: int, base: int, min_base: int) -> list:
 # radix sort from msb char --> lsb char
 def radsort_strings(lst: list) -> list:
 
-    result_lst = []
-
     # get the max length in lst of strings
     if len(lst) > 1:
         max_len = len(lst[0])
@@ -132,9 +149,13 @@ def radsort_strings(lst: list) -> list:
 
         # perform sort from LSB col --> MSB col
         for col in range((max_len-1), -1, -1):
-            result_lst = countsort_strings(lst, col, 26, ord('a'))
+            result_lst = countsort_strings(lst, col)
 
-    return result_lst        
+        lst = result_lst
+
+    return lst        
+
+
 
 # optimized count sort to sort based on length
 def optimized_countsort(lst, base, exp):
@@ -201,35 +222,38 @@ def interest_groups(data) -> list:
             interest_lst = tuple_pair[1]
             sorted_lst = radsort_strings(interest_lst)
             temp_lst.append([tuple_pair[0], sorted_lst])
-
+        print(temp_lst)
         # sort based on length of interest list to arrange closer
-        data = optimized_num_radsort(temp_lst)
-
+        data_copied = optimized_num_radsort(temp_lst)
+        print(data_copied)
         # check for groups
         group_lst = []
         pointer_1 = 0
         pointer_2 = 1
+        count = 0
 
         # pointer_1 first item, append name to group
         tmp_lst = []
-        tmp_lst.append(data[pointer_1][0])
+        tmp_lst.append(data_copied[pointer_1][0])
+        count += 1
 
         # while loop to loop through data items
-        while pointer_1 < len(data) and pointer_2 < len(data):
+        while pointer_1 < len(data_copied) and pointer_2 < len(data_copied):
 
             # go through data items
-            list_a = data[pointer_1][1]
-            list_b = data[pointer_2][1]
+            list_a = data_copied[pointer_1][1]
+            list_b = data_copied[pointer_2][1]
 
             # if same length --> do comparison
             if len(list_a) == len(list_b):
 
                 # if same group, append pointer_2 to tmp_lst
                 if compare_lists(list_a, list_b):
-                    tmp_lst.append(data[pointer_2][0])
+                    tmp_lst.append(data_copied[pointer_2][0])
+                    count += 1
 
                     # pop the person with same interest
-                    data.pop(pointer_2)
+                    data_copied.pop(pointer_2)
                 
                 # if false, continue to scan through
                 else:
@@ -240,28 +264,47 @@ def interest_groups(data) -> list:
 
                 # append the current group to group list
                 group_lst.append(tmp_lst)
-                
-                # remove the current person 
-                data.pop(pointer_1)
 
+                # remove the current person 
+                data_copied.pop(pointer_1)
+            
                 # reset the pointers
                 pointer_1 = 0
                 pointer_2 = 1
 
                 # reset tmp_lst
                 tmp_lst = []
-                tmp_lst.append(data[pointer_1][0])
+                tmp_lst.append(data_copied[pointer_1][0])
             
+        # case when comparing same length and same item on last loop
         group_lst.append(tmp_lst)
+
+        # case when comparing same length but not same on last loop
+        if count != len(data):
+            group_lst.append([data_copied[-1][0]])
+
         data = group_lst
+
+    # sort name in list 
+    sorted_name = []
+    for name_lst in data:
+        name_lst_sort = radsort_strings(name_lst)
+        sorted_name.append(name_lst_sort)
+
+    data = sorted_name
 
     # return list of list with people of same interests
     return data
 
-data = [("nuka", ["birds", "napping"]),
-                ("hadley", ["napping birds", "nash equilibria"]),
-                ("yaffe", ["rainy evenings", "the colour red", "birds"]),
-                ("laurie", ["napping", "birds"]),
-                ("kamalani", ["birds", "rainy evenings", "the colour red"])]
-print(interest_groups(data))
+# data = [("arthur", ["coding", "playing video games", "math", "binging youtube"]),
+#                 ("ash", ["becoming the greatest pokemon master of all time"]),
+#                 ("ian", ["roasting other units", "teaching computer science"]),
+#                 ("phoenix", ["legal assistance", "bluffing his way to victory"]),
+#                 ("barbara", ["singing", "dancing", "becoming an idol"])]
+# data = [("nuka", ["birds", "napping"]),
+#                 ("hadley", ["napping birds", "nash equilibria"]),
+#                 ("yaffe", ["rainy evenings", "the colour red", "birds"]),
+#                 ("laurie", ["napping", "birds"]),
+#                 ("kamalani", ["birds", "rainy evenings", "the colour red"])]
+# print(interest_groups(data))
 
