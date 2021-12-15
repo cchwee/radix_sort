@@ -43,7 +43,28 @@ Uncomment the code in the ```assignment.py``` to create four lists of data and p
 <br />
 
 ## Background Info: Task 3 - Interest Groups
+Consider a database consisting of people, each of whom like a set of things. We want to create groups of people with identical interests.
 
+## Input
+**data** is a list, where each element is a 2-element tuple representing a person. The first element
+is their name, which is a nonempty string of lowercase a-z with no spaces or punctuation. Every
+name in the list is unique.
 
+The second element is a nonempty list of nonempty strings, which represents the things this
+person likes. The strings consist of lowercase a-z and also spaces (i.e. they can be multiple
+words) but no other characters. This list is in no particular order.
 
+## Output
+**interest_groups** returns a list of lists. For each distinct set of liked things, there is a list which contains all the names of the people who like exactly those things. Within each list, the names should appear in ascending alphabetical order. The lists may appear in any order.
 
+## Example
+```
+data = [("nuka", ["birds", "napping"]),
+("hadley", ["napping birds", "nash equilibria"]),
+("yaffe", ["rainy evenings", "the colour red", "birds"]),
+("laurie", ["napping", "birds"]),
+("kamalani", ["birds", "rainy evenings", "the colour red"])]
+
+>>> interest_groups(data)
+[["laurie", "nuka"], ["hadley"], ["kamalani", "yaffe"]]
+```
