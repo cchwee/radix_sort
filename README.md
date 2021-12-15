@@ -1,18 +1,12 @@
 # Radix Sort
 
-## Task 1:
-### Implementation of radix sort to sort a given list of integers into ascending numerical order, using a given base, 
-> num_rad_sort(nums, b)
+## Background Info: Task 1 - Integer Radix Sort
+You need to use radix sort to sort a given list of integers into ascending numerical order, using a given base.
 
-#### The inputs:
-- #### nums is a unsorted list of positive integers
-- #### b is an integer of value ≥ 2
+## Input
+**nums** is a unsorted list of non-negative integers
 
-#### The output:
-- #### num_rad_sort returns a list of integers. 
-- #### The output list will have the same elements as nums, but it is sorted in an ascending numerical order.
+**b** is an integer, with value ≥ 2
 
-#### Example:
-- #### input list, nums = [43, 101, 22, 27, 5, 50, 15]
-- #### num_rad_sort(nums, 4)
-> #### Output: [5, 15, 22, 27, 43, 50, 101]
+## Output
+**num_rad_sort** returns a list of integers. This list will contain exactly the same elements as **nums**, but sorted into ascending numerical order.
