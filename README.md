@@ -68,3 +68,9 @@ data = [("nuka", ["birds", "napping"]),
 >>> interest_groups(data)
 [["laurie", "nuka"], ["hadley"], ["kamalani", "yaffe"]]
 ```
+
+## Complexity
+**interest_groups** must run in O(NM)
+- N is the number of elements in data
+- M is the maximum number of characters among all sets of liked things. You may assume that all names are also shorted than M characters.
+
