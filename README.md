@@ -29,7 +29,7 @@ nums = [43, 101, 22, 27, 5, 50, 15]
 ## Background Info: Task 2 - Timing Bases
 Write a function ```base_timer(num_list, base_list)``` which you will use to investigate the relationship between the base used and the runtime.
 
-Uncomment the code in the ```assignment.py``` to create four lists of data and produce output for them.
+Uncomment the code in the ```assignment1.py``` to create four lists of data and produce output for them.
 
 ## Input
 **num_list** is a list of non-negative integers.
@@ -74,3 +74,11 @@ data = [("nuka", ["birds", "napping"]),
 - N is the number of elements in data
 - M is the maximum number of characters among all sets of liked things. You may assume that all names are also shorted than M characters.
 
+<br />
+
+---end of tasks---
+ 
+  <br />
+ 
+#### Disclaimer
+- This is a school assignment question. 
