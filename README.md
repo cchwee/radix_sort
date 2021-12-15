@@ -26,6 +26,11 @@ nums = [43, 101, 22, 27, 5, 50, 15]
 
 <br />
 
+---this is a seperation line---
+
+<br />
+
+
 ## Background Info: Task 2 - Timing Bases
 Write a function ```base_timer(num_list, base_list)``` which you will use to investigate the relationship between the base used and the runtime.
 
@@ -41,6 +46,11 @@ Uncomment the code in the ```assignment1.py``` to create four lists of data and 
 
 
 <br />
+
+---this is a seperation line---
+
+<br />
+
 
 ## Background Info: Task 3 - Interest Groups
 Consider a database consisting of people, each of whom like a set of things. We want to create groups of people with identical interests.
